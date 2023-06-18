@@ -63,6 +63,14 @@ categorical_columns = dataset.dtypes[dataset.dtypes ==
 
 for column in categorical_columns:
     encoded = pd.get_dummies(dataset[column], prefix=column, dtype=int)
+
+    print("encoding", column)
+    # XGBoost necesita que los atributos no contengan los caracteres '[', ']' o '<'
+    if "coupon_Restaurant(<20)" in encoded.columns:
+        print("renaming")
+        encoded.rename(
+            {"coupon_Restaurant(<20)": "coupon_Restaurant(LessThan20)"}, axis=1, inplace=True)
+
     dataset.drop(columns=[column], inplace=True)
     dataset = dataset.join(encoded)
 

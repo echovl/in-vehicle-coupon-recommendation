@@ -3,11 +3,10 @@ from utils import print_title
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import train_test_split
-from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.svm import SVC
+import xgboost as xgb
 
 
 def roc_auc_score(model, x, y):
@@ -24,11 +23,17 @@ def train_model(name, x_train, y_train, x_test, y_test):
         model = RandomForestClassifier(random_state=33)
     elif name == "SVM":
         parameters = {
-            "C": [0.1, 1, 10, 100, 1000],
-            "kernel": ["linear", "poly", "rbf", "sigmoid", "precomputed"],
+            "C": [0.1, 1, 10, 100, 500],
+            "kernel": ["linear", "rbf", "sigmoid"],
             "gamma": ["scale", "auto"]
         }
         model = SVC(probability=True, random_state=33)
+    elif name == "XGBoost":
+        parameters = {
+            "max_depth": [1, 5, 10, 50],
+            "n_estimators": [100, 500, 1000, 2000]
+        }
+        model = xgb.XGBClassifier()
     else:
         raise NotImplementedError()
 
@@ -43,6 +48,9 @@ def train_model(name, x_train, y_train, x_test, y_test):
     elif name == "SVM":
         model_tuned = SVC(C=best_params["C"],
                           probability=True, random_state=33)
+    elif name == "XGBoost":
+        model_tuned = xgb.XGBClassifier(
+            n_estimators=best_params["n_estimators"], max_depth=best_params["max_depth"])
     else:
         raise NotImplementedError()
 
@@ -63,7 +71,7 @@ x_train, x_test, y_train, y_test = train_test_split(
 print_title("Entrenando Modelos")
 
 
-models = ["Random Forest", "SVM"]
+models = ["Random Forest", "XGBoost", "SVM"]
 
 for model in models:
     print_title(model)
