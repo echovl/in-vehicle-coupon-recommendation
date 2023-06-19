@@ -1,6 +1,7 @@
 import pandas as pd
 from utils import print_title
 from sklearn import metrics
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
@@ -34,6 +35,12 @@ def train_model(name, x_train, y_train, x_test, y_test):
             "n_estimators": [100, 500, 1000, 2000]
         }
         model = xgb.XGBClassifier()
+     
+    elif name == "LogisticRegression":
+        parameters = {
+            "C":[0.01, 0.1, 1, 10, 100, 500]
+        }
+        model = LogisticRegression(random_state=0,C=1.0)    
     else:
         raise NotImplementedError()
 
@@ -51,6 +58,9 @@ def train_model(name, x_train, y_train, x_test, y_test):
     elif name == "XGBoost":
         model_tuned = xgb.XGBClassifier(
             n_estimators=best_params["n_estimators"], max_depth=best_params["max_depth"])
+    elif name == "LogisticRegression":
+        model_tuned = LogisticRegression(
+            random_state=0,C=best_C)
     else:
         raise NotImplementedError()
 
