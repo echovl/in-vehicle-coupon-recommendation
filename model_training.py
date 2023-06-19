@@ -1,6 +1,7 @@
 import pandas as pd
 from typing import cast
 import seaborn as sns
+from sklearn.model_selection import train_test_split
 
 #Url Data
 dataset_url = "https://archive.ics.uci.edu/ml/machine-learning-databases/00603/in-vehicle-coupon-recommendation.csv"
@@ -45,5 +46,43 @@ for column in missing_values.to_dict():
     dataset[column].fillna(mode, inplace=True)
 
 print("Existen valores faltantes?", dataset.isna().values.any())
+
 #Tabla de informacion inicial
 dataset.head()
+
+# Ingenieria de atributos
+
+dataset["is_unemployed"] = dataset["occupation"].map(
+    lambda o: 1 if o == "Unemployed" else 0)
+
+dataset["is_student"] = dataset["occupation"].map(
+    lambda o: 1 if o == "Student" else 0)
+
+dataset.drop(columns=["occupation"], inplace=True)
+
+# Encoding
+
+categorical_columns = dataset.dtypes[dataset.dtypes ==
+                                     "object"].index.to_list()
+for column in categorical_columns:
+    encoded = pd.get_dummies(dataset[column], prefix=column, dtype=int)
+
+    print("encoding", column)
+    # XGBoost necesita que los atributos no contengan los caracteres '[', ']' o '<'
+    if "coupon_Restaurant(<20)" in encoded.columns:
+       encoded.rename(
+            {"coupon_Restaurant(<20)": "coupon_Restaurant(LessThan20)"}, axis=1, inplace=True)
+
+    dataset.drop(columns=[column], inplace=True)
+    dataset = dataset.join(encoded)
+    
+# Tabla de informacion final
+dataset.head()
+
+# Separamos la data, en variables independientes (x) y dependientes (y), para poder entrenar un árbol de clasificación
+x = dataset.drop(["Y"], axis=1)
+y = dataset["Y"]
+
+# Mediante el método "train_test_split" usaremos el 20% de la data para probar el modelo. El parámetro "random state" nos sirve para
+# poder replicar la misma separación
+x_train, x_test, y_train, y_test = train_test_split(x,y,test_size=0.3, random_state=42)
