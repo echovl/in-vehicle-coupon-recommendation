@@ -19,28 +19,14 @@ Para ello se ha subido los siguientes archivos.
 
 Los demás archivos .py son secciones de los código pero optimizados para correr de manera más rápida
 
-# Como iniciar?
-
-Crear un entorno virtual de python usando el siguiente comando:
-
-```sh
-python -m venv .venv
-```
-
-Activar el entorno virtual de python:
-
-```sh
-source .venv/bin/activate
-```
-
-Instalar las dependencias del proyecto:
-
-```sh
-pip install -r requirements.txt
-```
 
 # Explicacion de los archivos .py
 
 * `preprocessing.py`: script para preprocesamiento y creacion del dataset para el entrenamiento.
 * `train.py`: script para entrenar todos los modelos de nuestro experimento.
 * `model_training.py`: script principal donde esta el analisis, preprocesamiento y entrenamiento del presente experimento.
+
+# Referencias
+
+Parte de este trabajo se baso en el siguiente [artículo](https://medium.com/@niralidedaniya/in-vehicle-coupon-recommendation-a-machine-learning-classification-case-study-df67e7835703).
+
