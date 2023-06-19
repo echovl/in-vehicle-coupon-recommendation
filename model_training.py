@@ -4,6 +4,7 @@ import pandas as pd
 from typing import cast
 import seaborn as sns
 from sklearn.model_selection import train_test_split
+import numpy as np
 
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
