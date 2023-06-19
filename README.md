@@ -8,7 +8,7 @@ Proyecto final para el curso de Aprendizaje Automatico 2023-1 de la maestria de 
 - Javier Villegas Luis
 - Daniel Gonzalez Aronés
 
-#Descripción
+# Descripción
 
 Este proyecto se basa en identificar el mejor modelo de clasificación para el dataset 'in-vehicle-coupon-recomendation'
 
@@ -39,7 +39,7 @@ Instalar las dependencias del proyecto:
 pip install -r requirements.txt
 ```
 
-# Explicacion de los archivos
+# Explicacion de los archivos .py
 
 * `preprocessing.py`: script para preprocesamiento y creacion del dataset para el entrenamiento.
 * `train.py`: script para entrenar todos los modelos de nuestro experimento.
