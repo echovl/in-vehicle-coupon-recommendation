@@ -282,3 +282,62 @@ y_pred = xgb_model.predict(x_test)
 # se imprime un resumen de los demás indicadores
 print(classification_report(y_test, y_pred))
 
+# Clasificador de redes neuronales
+mlp_model = MLPClassifier()
+
+# Definición de hiperparámetros a buscar en la búsqueda aleatoria
+mlp_parameters = {
+    "hidden_layer_sizes": [[100], [200], [300], [500]],
+    "activation": ["identity", "logistic", "tanh", "relu"],
+    "max_iter": [700, 700]
+}
+
+# Búsqueda aleatoria de hiperparámetros
+mlp_model_search = RandomizedSearchCV(
+    mlp_model,
+    param_distributions=mlp_parameters,
+    n_iter=10,  # Número de combinaciones de hiperparámetros a probar
+    cv=5,  # Número de divisiones para la validación cruzada
+    random_state=42,
+    n_jobs=-1
+)
+mlp_model_search.fit(x_train, y_train)
+
+# Clasificador LogisticRegression con los mejores hiperparámetros
+mlp_model = MLPClassifier(**mlp_model_search.best_params_)
+
+# Entrenamineto del modelo
+mlp_model.fit(x_train, y_train)
+
+# Cálculo del AUC y gráfica de la Curva ROC
+plot_roc_curve(mlp_model, x_test, y_test)
+
+# Evaluar el modelo con los datos de prueba
+y_pred = mlp_model.predict(x_test)
+
+#AUNQUE SE HA DEFINIDO EL AUC COMO MÉTRICA
+# se imprime un resumen de los demás indicadores
+print(classification_report(y_test, y_pred))
+
+# Utilizamos nuestros clasificadores optimizados
+estimators = [
+    ("RandomForest", rf_model),
+    ("XGBoost", xgb_model),
+    ("MLP", mlp_model)
+]
+
+# Creamos el modelo ensamble y realizamos el entrenamiento
+stacking_model = StackingClassifier(
+    estimators=estimators,
+    final_estimator=LogisticRegression(penalty="l2"))
+
+stacking_model.fit(x_train, y_train)
+
+# Cálculo del AUC y gráfica de la Curva ROC
+plot_roc_curve(stacking_model, x_test, y_test)
+
+# Evaluar el modelo con los datos de prueba
+y_pred = stacking_model.predict(x_test)
+
+# Imprimir informe de clasificación
+print(classification_report(y_test, y_pred))
