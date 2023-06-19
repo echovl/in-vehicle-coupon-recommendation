@@ -341,3 +341,33 @@ y_pred = stacking_model.predict(x_test)
 
 # Imprimir informe de clasificación
 print(classification_report(y_test, y_pred))
+
+
+# Comparativa AUC
+models = [
+  lr_model,
+  rf_model,
+  svm_model,
+  xgb_model,
+  mlp_model,
+  stacking_model
+]
+
+colors = rainbow(np.linspace(0, 1, len(models)))
+
+plt.figure(figsize = (20, 12))
+plt.plot([0,1], [0,1], 'r--')
+
+for (idx, model) in enumerate(models):
+  model_name = type(model).__name__
+  y_pred_proba = model.predict_proba(x_test)[::, 1]
+  fpr, tpr, th = roc_curve(y_test,  y_pred_proba)
+  auc = roc_auc_score(y_test, y_pred_proba)
+
+  label = model_name + " AUC:" + " {0:.3f}".format(auc)
+  plt.plot(fpr, tpr, c = colors[idx], label = label, linewidth = 4)
+
+plt.xlabel("False Positive Rate", fontsize = 16)
+plt.ylabel("True Positive Rate", fontsize = 16)
+plt.title("Analisis comparativo de la métrica AUC", fontsize = 16)
+plt.legend(loc = "lower right", fontsize = 16)
