@@ -1,7 +1,36 @@
+##Librerías necesarias
+
 import pandas as pd
 from typing import cast
 import seaborn as sns
 from sklearn.model_selection import train_test_split
+
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.preprocessing import Normalizer
+from sklearn.preprocessing import OrdinalEncoder
+from sklearn.metrics import accuracy_score, roc_curve, roc_auc_score, confusion_matrix, ConfusionMatrixDisplay, classification_report
+from sklearn.metrics import accuracy_score,confusion_matrix
+from sklearn.metrics import log_loss,roc_auc_score
+from sklearn.metrics import roc_curve, auc
+from matplotlib.cm import rainbow
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neural_network import MLPClassifier
+from sklearn.svm import SVC
+from sklearn.naive_bayes import GaussianNB
+from sklearn.naive_bayes import CategoricalNB
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import StackingClassifier
+import xgboost as xgb
+
+from sklearn.calibration import CalibratedClassifierCV
+import matplotlib.pyplot as plt
+from sklearn.model_selection import RandomizedSearchCV
+from sklearn.model_selection import GridSearchCV
 
 #Url Data
 dataset_url = "https://archive.ics.uci.edu/ml/machine-learning-databases/00603/in-vehicle-coupon-recommendation.csv"
@@ -89,34 +118,6 @@ x_train, x_test, y_train, y_test = train_test_split(x,y,test_size=0.3, random_st
 
 
 # Entrenamiento de Modelos
-##Librerías necesarias
-from sklearn.model_selection import train_test_split
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.preprocessing import Normalizer
-from sklearn.preprocessing import OrdinalEncoder
-from sklearn.metrics import accuracy_score, roc_curve, roc_auc_score, confusion_matrix, ConfusionMatrixDisplay, classification_report
-from sklearn.metrics import accuracy_score,confusion_matrix
-from sklearn.metrics import log_loss,roc_auc_score
-from sklearn.metrics import roc_curve, auc
-from matplotlib.cm import rainbow
-
-from sklearn.linear_model import LogisticRegression
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.neural_network import MLPClassifier
-from sklearn.svm import SVC
-from sklearn.naive_bayes import GaussianNB
-from sklearn.naive_bayes import CategoricalNB
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.ensemble import StackingClassifier
-import xgboost as xgb
-
-from sklearn.calibration import CalibratedClassifierCV
-import matplotlib.pyplot as plt
-from sklearn.model_selection import RandomizedSearchCV
-from sklearn.model_selection import GridSearchCV
-
 
 # Creación de una función para el ploteo de la curva AUC
 def plot_roc_curve(model, x_test, y_test):
