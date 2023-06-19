@@ -55,7 +55,7 @@ print("Valores faltantes")
 print(missing_values)
 
 # Calculamos la matrix de correlacion de nuestro dataset
-sns.heatmap(dataset.corr(), annot=True, cmap="crest")
+sns.heatmap(dataset.corr(numeric_only=True), annot=True, cmap="crest")
 
 # Preprocesamiento
 
