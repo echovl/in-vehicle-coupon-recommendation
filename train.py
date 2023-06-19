@@ -81,7 +81,7 @@ x_train, x_test, y_train, y_test = train_test_split(
 print_title("Entrenando Modelos")
 
 
-models = ["Random Forest", "XGBoost", "SVM"]
+models = ["Random Forest", "XGBoost", "SVM","LogisticRegression"]
 
 for model in models:
     print_title(model)
