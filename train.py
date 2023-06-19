@@ -128,6 +128,7 @@ for model in models:
 
     stacking_estimators.append((model, model_tuned))
 
+print_title("Stacking")
 print(stacking_estimators)
 
 train_score, test_score, model_tuned = train_stacking_model(
