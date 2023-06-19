@@ -1,6 +1,23 @@
 # In Vehicle Coupon Recommendation
 
-Proyecto final para el curso de Aprendizaje Automatico de la maestria de informatica de la PUCP.
+Proyecto final para el curso de Aprendizaje Automatico 2023-1 de la maestria de Informática de la PUCP.
+
+# Alumnos
+
+- Miguel Astorayme Valenzuela
+- Javier Villegas Luis
+- Daniel Gonzalez Aronés
+
+#Descripción
+
+Este proyecto se basa en identificar el mejor modelo de clasificación para el dataset 'in-vehicle-coupon-recomendation'
+
+Para ello se ha subido los siguientes archivos.
+
+- codigo_final_ml.ipynb: código ejecutado en un notebook que muestra todos los resultados obtenidos
+- model_training.py: archivo con solo la codificación donde se muestra los aportes de los miembros del equipo.
+
+Los demás archivos .py son secciones de los código pero optimizados para correr de manera más rápida
 
 # Como iniciar?
 
