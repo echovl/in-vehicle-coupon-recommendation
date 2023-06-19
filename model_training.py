@@ -195,7 +195,7 @@ rf_model_search = RandomizedSearchCV(
 )
 rf_model_search.fit(x_train, y_train)
 
-# Clasificador LogisticRegression con los mejores hiperparámetros
+# Clasificador RandomForest con los mejores hiperparámetros
 rf_model = RandomForestClassifier(**rf_model_search.best_params_)
 
 # Entrenamineto del modelo
@@ -231,7 +231,7 @@ svm_model_search = RandomizedSearchCV(
 )
 svm_model_search.fit(x_train, y_train)
 
-# Clasificador LogisticRegression con los mejores hiperparámetros
+# Clasificador SVC con los mejores hiperparámetros
 svm_model = SVC(**svm_model_search.best_params_, probability=True)
 
 # Entrenamineto del modelo
@@ -266,7 +266,7 @@ xgb_model_search = RandomizedSearchCV(
 )
 xgb_model_search.fit(x_train, y_train)
 
-# Clasificador LogisticRegression con los mejores hiperparámetros
+# Clasificador XGBBoost con los mejores hiperparámetros
 xgb_model = xgb.XGBClassifier(**xgb_model_search.best_params_)
 
 # Entrenamiento del modelo
