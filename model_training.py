@@ -211,3 +211,74 @@ y_pred = rf_model.predict(x_test)
 # se imprime un resumen de los demás indicadores
 print(classification_report(y_test, y_pred))
 
+# clasificador SVC
+svm_model = SVC()
+# Definición de hiperparámetros a buscar en la búsqueda aleatoria
+svm_parameters = {
+    "C": [0.1, 1, 10, 100],
+    "kernel": ["linear", "rbf", "sigmoid"],
+    "gamma": ["scale", "auto"]
+}
+# Búsqueda aleatoria de hiperparámetros
+svm_model_search = RandomizedSearchCV(
+    svm_model,
+    param_distributions=svm_parameters,
+    n_iter=10,  # Número de combinaciones de hiperparámetros a probar
+    cv=5,  # Número de divisiones para la validación cruzada
+    random_state=42,
+    n_jobs=-1,
+    verbose=2
+)
+svm_model_search.fit(x_train, y_train)
+
+# Clasificador LogisticRegression con los mejores hiperparámetros
+svm_model = SVC(**svm_model_search.best_params_, probability=True)
+
+# Entrenamineto del modelo
+svm_model.fit(x_train, y_train)
+# Cálculo del AUC y gráfica de la Curva ROC
+plot_roc_curve(svm_model, x_test, y_test)
+# Evaluar el modelo con los datos de prueba
+y_pred = svm_model.predict(x_test)
+
+#AUNQUE SE HA DEFINIDO EL AUC COMO MÉTRICA
+# se imprime un resumen de los demás indicadores
+print(classification_report(y_test, y_pred))
+
+# Crear el clasificador XGBoost
+xgb_model = xgb.XGBClassifier()
+
+# Definir los hiperparámetros a buscar en la búsqueda aleatoria
+xgb_parameters = {
+    "max_depth": [1, 5, 10, 50],
+    "n_estimators": [100, 500, 1000, 2000]
+}
+
+# Realizar la búsqueda aleatoria de hiperparámetros
+xgb_model_search = RandomizedSearchCV(
+    xgb_model,
+    param_distributions=xgb_parameters,
+    n_iter=10,  # Número de combinaciones de hiperparámetros a probar
+    cv=5,  # Número de divisiones para la validación cruzada
+    random_state=42,
+    n_jobs=-1,
+    verbose=2
+)
+xgb_model_search.fit(x_train, y_train)
+
+# Clasificador LogisticRegression con los mejores hiperparámetros
+xgb_model = xgb.XGBClassifier(**xgb_model_search.best_params_)
+
+# Entrenamiento del modelo
+xgb_model.fit(x_train, y_train)
+
+# Cálculo del AUC y gráfica de la Curva ROC
+plot_roc_curve(xgb_model, x_test, y_test)
+
+# Evaluar el modelo con los datos de prueba
+y_pred = xgb_model.predict(x_test)
+
+#AUNQUE SE HA DEFINIDO EL AUC COMO MÉTRICA
+# se imprime un resumen de los demás indicadores
+print(classification_report(y_test, y_pred))
+
