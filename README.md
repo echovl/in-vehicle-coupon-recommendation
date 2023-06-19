@@ -21,3 +21,9 @@ Instalar las dependencias del proyecto:
 ```sh
 pip install -r requirements.txt
 ```
+
+# Explicacion de los archivos
+
+* `preprocessing.py`: script para preprocesamiento y creacion del dataset para el entrenamiento.
+* `train.py`: script para entrenar todos los modelos de nuestro experimento.
+* `model_training.py`: script principal donde esta el analisis, preprocesamiento y entrenamiento del presente experimento.
